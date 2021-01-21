@@ -1,6 +1,10 @@
-const changeDisplay = (timeStr) {
-  
+const globals = {
+  interval: null,
 }
+
+const changeDisplay = (timeStr) => {
+  console.log(timeStr)
+};
 
 const timerKickoff = (mins = 0, secs = 0) => {
   let duration = mins * 60 + secs * 6;
@@ -9,7 +13,7 @@ const timerKickoff = (mins = 0, secs = 0) => {
     hours,
     minutes,
     seconds,
-    interval;
+    display;
   function timer() {
     // get the number of seconds that have elapsed since
     // startTimer() was called
@@ -29,24 +33,27 @@ const timerKickoff = (mins = 0, secs = 0) => {
 
     // display.textContent = minutes + ":" + seconds;
     if (hours === "00") {
-      console.log(minutes + ":" + seconds);
+      display = minutes + ":" + seconds;
+      // console.log(minutes + ":" + seconds);
     } else {
-      console.log(hours + ":" + minutes + ":" + seconds);
+      display = hours + ":" + minutes + ":" + seconds;
+      // console.log(hours + ":" + minutes + ":" + seconds);
     }
+
+    changeDisplay(display);
 
     if (diff <= 0) {
       // add one second so that the count down starts at the full duration
       // example 05:00 not 04:59
       start = Date.now() + 1000;
     }
-    if (hours === "00" && minutes === "00" && seconds === "00") {
-      console.log("done");
-      clearInterval(interval);
+    if (diff <= 0) {
+      clearInterval(globals.interval);
     }
   }
   // we don't want to wait a full second before the timer starts
   timer();
-  interval = setInterval(timer, 1000);
+  globals.interval = setInterval(timer, 1000);
 };
 
 const timer = (minutes = 0, seconds = 0) => {
