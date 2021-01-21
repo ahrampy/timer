@@ -1,0 +1,24 @@
+html {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form > #main {
+  width: 30vw;
+  height: 10vh;
+  font-size: 8vh;
+  text-align: center;
+}
+
+/* form > #start {
+  margin-top: 1em;
+  height: 2em;
+} */
