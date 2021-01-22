@@ -1,5 +1,6 @@
 const globals = {
   // dom eles
+  body: null,
   form: null,
   timerInput: null,
   timerDiv: null,
@@ -16,8 +17,13 @@ const assets = {
   ding: null,
 };
 
+// const changeBackground = (hours, minutes, seconds) => {
+//   globals.body.style.backgroundColor = `rgb(${(hours + 100)}, ${
+//     (minutes * 3 + 100)
+//   }, ${(seconds * 5 + 100)})`;
+// };
+
 const changeDisplay = (timeStr) => {
-  // console.log(globals.timerDiv);
   globals.timerDiv.innerHTML = timeStr;
 };
 
@@ -30,15 +36,14 @@ const timerKickoff = (mins = 0, secs = 0) => {
     seconds,
     display;
   function timer() {
-    // get the number of seconds that have elapsed since timerKickoff() was called
     diff = duration - (((Date.now() - start) / 1000) | 0);
 
-    // does the same job as parseInt truncates the float
     hours = Math.floor(diff / 3600) | 0;
     minutes = Math.floor((diff % 3600) / 60) | 0;
     seconds = Math.floor((diff % 3600) % 60) | 0;
 
-    // format
+    // changeBackground(hours, minutes, seconds);
+
     hours = hours < 10 ? "0" + hours : hours;
     minutes = minutes < 10 ? "0" + minutes : minutes;
     seconds = seconds < 10 ? "0" + seconds : seconds;
@@ -49,31 +54,23 @@ const timerKickoff = (mins = 0, secs = 0) => {
       display = hours + ":" + minutes + ":" + seconds;
     }
 
-    changeDisplay(display);
-
-    if (diff <= 0) {
+    if (diff < 0) {
       clearInterval(globals.interval);
       if (!globals.muted) assets.ding.play();
+    } else {
+      changeDisplay(display);
     }
   }
-  // we don't want to wait a full second before the timer starts
   timer();
   globals.interval = setInterval(timer, 1000);
 };
 
 const startTimer = (e) => {
   e.preventDefault();
-  // select for any combo of valid minutes or minutes fractions with decimals
-  let regex = /^(-?\d+)*\.?(\d+)?$/;
+  // select for any combo of valid minutes or minutes fractions by decimals
+  let regex = /^(-?\d+)*\.?([1-9])?$/;
   let match = globals.timerInput.value.match(regex);
-  if (!match) {
-    // do not accept non-number inputs
-    globals.timerInput.placeholder = "NaN";
-  } else if (match[1] < 0 || match[2] > 9) {
-    // get sassy if the minute or decimal places are invalid
-    globals.timerInput.placeholder = "plz";
-  } else {
-    // start timer
+  if (match) {
     globals.timerInput.placeholder = "";
     globals.timerInput.style.display = "none";
     globals.timerDiv.style.display = "block";
@@ -83,16 +80,14 @@ const startTimer = (e) => {
   globals.timerInput.value = "";
 };
 
-const stopTimer = (e) => {
-  e.preventDefault();
+const stopTimer = () => {
   globals.timerInput.style.display = "block";
   globals.timerDiv.style.display = "none";
   globals.clearBtn.style.opacity = "0";
   clearInterval(globals.interval);
 };
 
-const toggleAudioIcon = (e) => {
-  // e.preventDefault();
+const toggleAudioIcon = () => {
   if (globals.muted) {
     globals.audioImg.src = "images/audio.png";
     globals.muted = false;
@@ -103,6 +98,7 @@ const toggleAudioIcon = (e) => {
 };
 
 const addDomEles = () => {
+  globals.body = document.querySelector("body");
   globals.form = document.querySelector("#timerForm");
   globals.timerInput = document.querySelector("#timerInput");
   globals.timerDiv = document.querySelector("#timerClock");

@@ -8,6 +8,7 @@ html {
 
 body {
   font-family: Garamond, serif;
+  transition: background-color 0.5s ease;
 }
 
 h2 {
@@ -16,18 +17,12 @@ h2 {
   margin: 1em;
 }
 
-#nav {
+#audio-btn {
   position: absolute;
   top: 1em;
   right: 1em;
   width: 2em;
   height: 2em;
-  box-sizing: border-box;
-}
-
-#audio-btn {
-  width: 100%;
-  height: 100%;
   padding: 1px;
   background-color: transparent;
   border: transparent;
@@ -49,26 +44,18 @@ h2 {
   justify-content: center;
   align-items: center;
   margin-bottom: 10vh;
-}
-
-/* form {
-  display: flex;
-  flex-direction: column;
-} */
-
-form > #timerInput {
-  font-family: "Courier New", monospace;
-  width: 30vw;
-  height: 12vh;
-  font-size: 10vh;
-  text-align: center;
   box-sizing: border-box;
 }
 
-/* form > #start {
-  margin-top: 1em;
-  height: 2em;
-} */
+form > #timerInput {
+  font-family: "Courier New", monospace;
+  font-size: 10vh;
+  width: 30vw;
+  height: 12vh;
+  padding: 0;
+  text-align: center;
+  box-sizing: border-box;
+}
 
 #timerClock {
   font-family: "Courier New", monospace;
@@ -92,9 +79,12 @@ form > #timerInput {
 }
 
 #plans > textarea {
+  font-family: Garamond, serif;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 30vw;
+  height: 20vh;
   padding: 1vh;
   font-size: 4vh;
 }
