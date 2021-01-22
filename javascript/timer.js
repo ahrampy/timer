@@ -17,10 +17,13 @@ const assets = {
   ding: null,
 };
 
-// const changeBackground = (hours, minutes, seconds) => {
-//   globals.body.style.backgroundColor = `rgb(${(hours + 100)}, ${
-//     (minutes * 3 + 100)
-//   }, ${(seconds * 5 + 100)})`;
+// const changeBackground = (duration, hours, minutes, seconds) => {
+//   globals.body.style.background = `linear-gradient(
+//     ${seconds % 10}deg,
+//     rgba(255, 141, 1, 0.886) ${0}%,
+//     rgba(255, 225, 0, 0.838) ${minutes + 30}%,
+//     rgba(50, 167, 0, 0.79) ${100}%
+//   )`;
 // };
 
 const changeDisplay = (timeStr) => {
@@ -42,7 +45,7 @@ const timerKickoff = (mins = 0, secs = 0) => {
     minutes = Math.floor((diff % 3600) / 60) | 0;
     seconds = Math.floor((diff % 3600) % 60) | 0;
 
-    // changeBackground(hours, minutes, seconds);
+    // changeBackground(duration, hours, minutes, seconds);
 
     hours = hours < 10 ? "0" + hours : hours;
     minutes = minutes < 10 ? "0" + minutes : minutes;
@@ -85,6 +88,7 @@ const stopTimer = () => {
   globals.timerDiv.style.display = "none";
   globals.clearBtn.style.opacity = "0";
   clearInterval(globals.interval);
+  globals.timerInput.focus();
 };
 
 const toggleAudioIcon = () => {
@@ -117,10 +121,18 @@ const loadAudio = () => {
   assets.ding = new Audio("../audio/low-ding.mp3");
 };
 
+const addBG = () => {
+  // const bg = new Image();
+  // bg.src = `../images/backgrounds/${Math.floor(Math.random() * 7)}.png`
+  // globals.html.backgroundImage = bg;
+}
+
 const init = () => {
   addDomEles();
   addListeners();
   loadAudio();
+  addBG();
+  globals.timerInput.focus()
 };
 
 window.addEventListener("load", init);
