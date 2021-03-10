@@ -1,3 +1,5 @@
+const storage = window.localStorage;
+
 const global = {
   // dom eles
   body: null,
@@ -15,15 +17,22 @@ const global = {
   duration: null,
   start: null,
   diff: null,
+  // hours, minutes, seconds
   time: [0, 0, 0],
 
   // internal
   interval: null,
-  muted: false,
 };
 
 const assets = {
   ding: null,
+};
+
+const checkStorage = () => {
+  if (storage.getItem("volume") === undefined) {
+    storage.setItem("volume", "on");
+  }
+  updateAudio();
 };
 
 const timerKickoff = (mins = 0, secs = 0) => {
@@ -46,11 +55,12 @@ function timer() {
 
   if (global.diff <= 60) global.subtractBtn.style.opacity = 0;
   if (global.diff === 0) {
-    if (!global.muted) assets.ding.play();
+    if (storage.getItem("volume") === "on") assets.ding.play();
+    global.subtractBtn.style.opacity = "0";
+    global.addBtn.style.opacity = "0";
+    global.clearBtn.innerHTML = "new";
     clearInterval(global.interval);
-  }
-
-  if (global.diff < 0) return;
+  } else if (global.diff < 0) return;
 
   changeDisplay();
 }
@@ -103,19 +113,27 @@ const stopTimer = () => {
   global.timerInput.style.display = "block";
   global.timerDiv.style.display = "none";
   global.subtractBtn.style.opacity = "0";
+  global.clearBtn.innerHTML = "clear";
   global.clearBtn.style.opacity = "0";
   global.addBtn.style.opacity = "0";
   global.timerInput.focus();
 };
 
-const toggleAudioIcon = () => {
-  if (global.muted) {
+const updateAudio = () => {
+  if (storage.getItem("volume") === "on") {
     global.audioImg.src = "images/audio.png";
-    global.muted = false;
   } else {
     global.audioImg.src = "images/no-audio.png";
-    global.muted = true;
   }
+};
+
+const toggleAudio = () => {
+  if (storage.getItem("volume") === "on") {
+    storage.setItem("volume", "off");
+  } else {
+    storage.setItem("volume", "on");
+  }
+  updateAudio();
 };
 
 const addDomEles = () => {
@@ -135,7 +153,7 @@ const addListeners = () => {
   global.subtractBtn.addEventListener("click", removeTime);
   global.clearBtn.addEventListener("click", stopTimer);
   global.addBtn.addEventListener("click", addTime);
-  global.audioBtn.addEventListener("click", toggleAudioIcon);
+  global.audioBtn.addEventListener("click", toggleAudio);
 };
 
 const loadAudio = () => {
@@ -146,6 +164,7 @@ const init = () => {
   addDomEles();
   addListeners();
   loadAudio();
+  checkStorage();
   global.timerInput.focus();
 };
 
