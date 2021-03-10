@@ -17,15 +17,6 @@ const assets = {
   ding: null,
 };
 
-// const changeBackground = (duration, hours, minutes, seconds) => {
-//   globals.body.style.background = `linear-gradient(
-//     ${seconds % 10}deg,
-//     rgba(255, 141, 1, 0.886) ${0}%,
-//     rgba(255, 225, 0, 0.838) ${minutes + 30}%,
-//     rgba(50, 167, 0, 0.79) ${100}%
-//   )`;
-// };
-
 const changeDisplay = (timeStr) => {
   globals.timerDiv.innerHTML = timeStr;
 };
@@ -45,8 +36,6 @@ const timerKickoff = (mins = 0, secs = 0) => {
     minutes = Math.floor((diff % 3600) / 60) | 0;
     seconds = Math.floor((diff % 3600) % 60) | 0;
 
-    // changeBackground(duration, hours, minutes, seconds);
-
     hours = hours < 10 ? "0" + hours : hours;
     minutes = minutes < 10 ? "0" + minutes : minutes;
     seconds = seconds < 10 ? "0" + seconds : seconds;
@@ -57,12 +46,12 @@ const timerKickoff = (mins = 0, secs = 0) => {
       display = hours + ":" + minutes + ":" + seconds;
     }
 
-    if (diff < 0) {
-      clearInterval(globals.interval);
+    if (diff === 0) {
       if (!globals.muted) assets.ding.play();
-    } else {
-      changeDisplay(display);
+      clearInterval(globals.interval);
     }
+    
+    changeDisplay(display);
   }
   timer();
   globals.interval = setInterval(timer, 1000);
@@ -70,8 +59,10 @@ const timerKickoff = (mins = 0, secs = 0) => {
 
 const startTimer = (e) => {
   e.preventDefault();
+
   // select for any combo of valid minutes or minutes fractions by decimals
   let regex = /^(-?\d+)*\.?([1-9])?$/;
+
   let match = globals.timerInput.value.match(regex);
   if (match) {
     globals.timerInput.placeholder = "";
@@ -121,18 +112,11 @@ const loadAudio = () => {
   assets.ding = new Audio("../audio/low-ding.mp3");
 };
 
-const addBG = () => {
-  // const bg = new Image();
-  // bg.src = `../images/backgrounds/${Math.floor(Math.random() * 7)}.png`
-  // globals.html.backgroundImage = bg;
-}
-
 const init = () => {
   addDomEles();
   addListeners();
   loadAudio();
-  addBG();
-  globals.timerInput.focus()
+  globals.timerInput.focus();
 };
 
 window.addEventListener("load", init);
