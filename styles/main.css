@@ -74,7 +74,7 @@ h2 {
   text-align: center;
   background-color: transparent;
   font-size: 10vh;
-  width: 30vw;
+  width: 20vw;
   height: 12vh;
   padding: 0;
   border: black solid 1px;
@@ -89,14 +89,22 @@ h2 {
   text-align: center;
 }
 
+#timer-btns button {
+  cursor: pointer;
+}
+
 #stop-timer {
   background-color: transparent;
   padding: 0.5em;
   margin-top: 1vh;
   border: black solid 1px;
   border-radius: 5px;
+}
 
-  cursor: pointer;
+#subtract-time-btn,
+#add-time-btn {
+  background-color: inherit;
+  border: none;
 }
 
 #plans {
@@ -118,10 +126,15 @@ h2 {
   padding: 1em;
   font-size: 20px;
   border-width: 0;
-  /* border-color: black; */
 }
 
+#timer-btns {
+  display: flex;
+}
+
+#subtract-time-btn,
 #stop-timer,
+#add-time-btn,
 textarea {
   outline: none;
 }

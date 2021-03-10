@@ -1,12 +1,21 @@
-const globals = {
+const global = {
   // dom eles
   body: null,
   form: null,
   timerInput: null,
   timerDiv: null,
+  subtractBtn: null,
   clearBtn: null,
+  addBtn: null,
   audioBtn: null,
   audioIcon: null,
+
+  // time
+  display: null,
+  duration: null,
+  start: null,
+  diff: null,
+  time: [0, 0, 0],
 
   // internal
   interval: null,
@@ -17,44 +26,45 @@ const assets = {
   ding: null,
 };
 
-const changeDisplay = (timeStr) => {
-  globals.timerDiv.innerHTML = timeStr;
+const timerKickoff = (mins = 0, secs = 0) => {
+  global.duration = mins * 60 + secs * 6;
+  global.start = Date.now();
+  timer();
+  global.interval = setInterval(timer, 1000);
 };
 
-const timerKickoff = (mins = 0, secs = 0) => {
-  let duration = mins * 60 + secs * 6;
-  let start = Date.now(),
-    diff,
-    hours,
-    minutes,
-    seconds,
-    display;
-  function timer() {
-    diff = duration - (((Date.now() - start) / 1000) | 0);
+function timer() {
+  global.diff = global.duration - (((Date.now() - global.start) / 1000) | 0);
 
-    hours = Math.floor(diff / 3600) | 0;
-    minutes = Math.floor((diff % 3600) / 60) | 0;
-    seconds = Math.floor((diff % 3600) % 60) | 0;
+  global.time[0] = Math.floor(global.diff / 3600) | 0;
+  global.time[1] = Math.floor((global.diff % 3600) / 60) | 0;
+  global.time[2] = Math.floor((global.diff % 3600) % 60) | 0;
 
-    hours = hours < 10 ? "0" + hours : hours;
-    minutes = minutes < 10 ? "0" + minutes : minutes;
-    seconds = seconds < 10 ? "0" + seconds : seconds;
+  global.time[0] = global.time[0] < 10 ? "0" + global.time[0] : global.time[0];
+  global.time[1] = global.time[1] < 10 ? "0" + global.time[1] : global.time[1];
+  global.time[2] = global.time[2] < 10 ? "0" + global.time[2] : global.time[2];
 
-    if (hours === "00" || hours <= 0) {
-      display = minutes + ":" + seconds;
-    } else {
-      display = hours + ":" + minutes + ":" + seconds;
-    }
+  if (global.diff <= 60) global.subtractBtn.style.opacity = 0;
 
-    if (diff === 0) {
-      if (!globals.muted) assets.ding.play();
-      clearInterval(globals.interval);
-    }
-    
-    changeDisplay(display);
+  if (global.diff === 0) {
+    if (!global.muted) assets.ding.play();
+    clearInterval(global.interval);
   }
-  timer();
-  globals.interval = setInterval(timer, 1000);
+
+  console.log(global.diff);
+
+  changeDisplay();
+}
+
+const changeDisplay = () => {
+  if (global.time[0] === "00" || global.time[0] <= 0) {
+    global.display = global.time[1] + ":" + global.time[2];
+  } else {
+    global.display =
+      global.time[0] + ":" + global.time[1] + ":" + global.time[2];
+  }
+
+  global.timerDiv.innerHTML = global.display;
 };
 
 const startTimer = (e) => {
@@ -63,49 +73,70 @@ const startTimer = (e) => {
   // select for any combo of valid minutes or minutes fractions by decimals
   let regex = /^(-?\d+)*\.?([1-9])?$/;
 
-  let match = globals.timerInput.value.match(regex);
+  let match = global.timerInput.value.match(regex);
   if (match) {
-    globals.timerInput.placeholder = "";
-    globals.timerInput.style.display = "none";
-    globals.timerDiv.style.display = "block";
-    globals.clearBtn.style.opacity = "100";
+    global.timerInput.placeholder = "";
+    global.timerInput.style.display = "none";
+    global.timerDiv.style.display = "block";
+    global.subtractBtn.style.opacity = "100";
+    global.clearBtn.style.opacity = "100";
+    global.addBtn.style.opacity = "100";
     timerKickoff(match[1], match[2]);
   }
-  globals.timerInput.value = "";
+  global.timerInput.value = "";
+};
+
+const removeTime = () => {
+  if (global.duration > 60) {
+    global.duration -= 60;
+    timer();
+  }
+};
+
+const addTime = () => {
+  global.duration += 60;
+  if (global.duration > 60) global.subtractBtn.style.opacity = 100;
+  timer();
 };
 
 const stopTimer = () => {
-  globals.timerInput.style.display = "block";
-  globals.timerDiv.style.display = "none";
-  globals.clearBtn.style.opacity = "0";
-  clearInterval(globals.interval);
-  globals.timerInput.focus();
+  global.timerInput.style.display = "block";
+  global.timerDiv.style.display = "none";
+  global.subtractBtn.style.opacity = "0";
+  global.clearBtn.style.opacity = "0";
+  global.addBtn.style.opacity = "0";
+  clearInterval(global.interval);
+  global.timerInput.focus();
 };
 
 const toggleAudioIcon = () => {
-  if (globals.muted) {
-    globals.audioImg.src = "images/audio.png";
-    globals.muted = false;
+  if (global.muted) {
+    global.audioImg.src = "images/audio.png";
+    global.muted = false;
   } else {
-    globals.audioImg.src = "images/no-audio.png";
-    globals.muted = true;
+    global.audioImg.src = "images/no-audio.png";
+    global.muted = true;
   }
 };
 
 const addDomEles = () => {
-  globals.body = document.querySelector("body");
-  globals.form = document.querySelector("#timerForm");
-  globals.timerInput = document.querySelector("#timerInput");
-  globals.timerDiv = document.querySelector("#timerClock");
-  globals.clearBtn = document.querySelector("#stop-timer");
-  globals.audioBtn = document.querySelector("#audio-btn");
-  globals.audioImg = document.querySelector("#audio-icon");
+  global.body = document.querySelector("body");
+  global.form = document.querySelector("#timerForm");
+  global.timerInput = document.querySelector("#timerInput");
+  global.timerDiv = document.querySelector("#timerClock");
+  global.subtractBtn = document.querySelector("#subtract-time-btn");
+  global.clearBtn = document.querySelector("#stop-timer");
+  global.addBtn = document.querySelector("#add-time-btn");
+  global.audioBtn = document.querySelector("#audio-btn");
+  global.audioImg = document.querySelector("#audio-icon");
 };
 
 const addListeners = () => {
-  globals.form.addEventListener("submit", startTimer);
-  globals.clearBtn.addEventListener("click", stopTimer);
-  globals.audioBtn.addEventListener("click", toggleAudioIcon);
+  global.form.addEventListener("submit", startTimer);
+  global.subtractBtn.addEventListener("click", removeTime);
+  global.clearBtn.addEventListener("click", stopTimer);
+  global.addBtn.addEventListener("click", addTime);
+  global.audioBtn.addEventListener("click", toggleAudioIcon);
 };
 
 const loadAudio = () => {
@@ -116,7 +147,7 @@ const init = () => {
   addDomEles();
   addListeners();
   loadAudio();
-  globals.timerInput.focus();
+  global.timerInput.focus();
 };
 
 window.addEventListener("load", init);
