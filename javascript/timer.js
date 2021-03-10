@@ -45,13 +45,12 @@ function timer() {
   global.time[2] = global.time[2] < 10 ? "0" + global.time[2] : global.time[2];
 
   if (global.diff <= 60) global.subtractBtn.style.opacity = 0;
-
   if (global.diff === 0) {
     if (!global.muted) assets.ding.play();
     clearInterval(global.interval);
   }
 
-  console.log(global.diff);
+  if (global.diff < 0) return;
 
   changeDisplay();
 }
@@ -100,12 +99,12 @@ const addTime = () => {
 };
 
 const stopTimer = () => {
+  clearInterval(global.interval);
   global.timerInput.style.display = "block";
   global.timerDiv.style.display = "none";
   global.subtractBtn.style.opacity = "0";
   global.clearBtn.style.opacity = "0";
   global.addBtn.style.opacity = "0";
-  clearInterval(global.interval);
   global.timerInput.focus();
 };
 
