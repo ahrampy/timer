@@ -9,7 +9,7 @@ html {
   align-items: center;
   width: 100%;
   height: 100%;
-  background: url(../images/bg-1.png) no-repeat center center fixed;
+  background: url(../images/bg-1.png);
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -35,14 +35,14 @@ h2 {
   height: 2.5em;
 }
 
-#bg-menu {
+#bg-btn {
   bottom: 1em;
   width: 2em;
   height: 2em;
 }
 
 #audio-btn,
-#bg-menu {
+#bg-btn {
   position: absolute;
   right: 1em;
   padding: 1px;
@@ -52,22 +52,26 @@ h2 {
 }
 
 #audio-btn:focus,
-#bg-menu:focus {
+#bg-btn:focus {
   outline: 0;
 }
 
 #audio-icon,
 #bg-icon {
-  width: 100%;
-  height: 100%;
-  filter: invert(1);
+  width: 25px;
+  height: 25px;
 }
 
-#bg-options {
+#bg-icon {
+  filter: invert(100);
+}
+
+.bg-options {
   position: absolute;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: flex-end;
   bottom: 1em;
   right: 3.5em;
   height: 10vh;
@@ -78,25 +82,27 @@ h2 {
   background-size: cover;
   background-position-x: center;
   background-position-y: center;
-  height: 100%;
-  width: 45%;
+  height: 75px;
+  width: 75px;
   border: white 2px solid;
   box-sizing: border-box;
+  outline: 0;
+  cursor: pointer;
 }
 
-.bg-option--hidden {
+.hidden {
   display: none;
 }
 
-#bg-option-1 {
+#bg-option-river {
   background-image: url("../images/bg-1.png");
 }
 
-#bg-option-2 {
+#bg-option-mountain {
   background-image: url("../images/bg-2.png");
 }
 
-#bg-option-3 {
+#bg-option-window {
   background-image: url("../images/bg-3.png");
 }
 
