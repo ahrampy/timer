@@ -30,25 +30,74 @@ h2 {
 }
 
 #audio-btn {
-  position: absolute;
   top: 1em;
-  right: 1em;
+  width: 2.5em;
+  height: 2.5em;
+}
+
+#bg-menu {
+  bottom: 1em;
   width: 2em;
   height: 2em;
+}
+
+#audio-btn,
+#bg-menu {
+  position: absolute;
+  right: 1em;
   padding: 1px;
   background-color: transparent;
   border: transparent;
   cursor: pointer;
 }
 
-#audio-btn:focus {
+#audio-btn:focus,
+#bg-menu:focus {
   outline: 0;
 }
 
-#audio-icon {
+#audio-icon,
+#bg-icon {
   width: 100%;
   height: 100%;
   filter: invert(1);
+}
+
+#bg-options {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  bottom: 1em;
+  right: 3.5em;
+  height: 10vh;
+  width: 170px;
+}
+
+.bg-option {
+  background-size: cover;
+  background-position-x: center;
+  background-position-y: center;
+  height: 100%;
+  width: 45%;
+  border: white 2px solid;
+  box-sizing: border-box;
+}
+
+.bg-option--hidden {
+  display: none;
+}
+
+#bg-option-1 {
+  background-image: url("../images/bg-1.png");
+}
+
+#bg-option-2 {
+  background-image: url("../images/bg-2.png");
+}
+
+#bg-option-3 {
+  background-image: url("../images/bg-3.png");
 }
 
 #timer-container {

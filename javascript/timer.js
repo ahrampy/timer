@@ -1,7 +1,6 @@
 const storage = window.localStorage;
 
-const global = {
-  // dom eles
+const dom = {
   body: null,
   form: null,
   timerInput: null,
@@ -11,7 +10,9 @@ const global = {
   addBtn: null,
   audioBtn: null,
   audioIcon: null,
+};
 
+const global = {
   // time
   display: null,
   duration: null,
@@ -53,12 +54,12 @@ function timer() {
   global.time[1] = global.time[1] < 10 ? "0" + global.time[1] : global.time[1];
   global.time[2] = global.time[2] < 10 ? "0" + global.time[2] : global.time[2];
 
-  if (global.diff <= 60) global.subtractBtn.style.opacity = 0;
+  if (global.diff <= 60) dom.subtractBtn.style.opacity = 0;
   if (global.diff === 0) {
     if (storage.getItem("volume") === "on") assets.ding.play();
-    global.subtractBtn.style.opacity = "0";
-    global.addBtn.style.opacity = "0";
-    global.clearBtn.innerHTML = "new";
+    dom.subtractBtn.style.opacity = "0";
+    dom.addBtn.style.opacity = "0";
+    dom.clearBtn.innerHTML = "new";
     clearInterval(global.interval);
   } else if (global.diff < 0) return;
 
@@ -73,7 +74,7 @@ const changeDisplay = () => {
       global.time[0] + ":" + global.time[1] + ":" + global.time[2];
   }
 
-  global.timerDiv.innerHTML = global.display;
+  dom.timerDiv.innerHTML = global.display;
 };
 
 const startTimer = (e) => {
@@ -82,17 +83,17 @@ const startTimer = (e) => {
   // select for any combo of valid minutes or minutes fractions by decimals
   let regex = /^(-?\d+)*\.?([1-9])?$/;
 
-  let match = global.timerInput.value.match(regex);
+  let match = dom.timerInput.value.match(regex);
   if (match) {
-    global.timerInput.placeholder = "";
-    global.timerInput.style.display = "none";
-    global.timerDiv.style.display = "block";
-    global.subtractBtn.style.opacity = "100";
-    global.clearBtn.style.opacity = "100";
-    global.addBtn.style.opacity = "100";
+    dom.timerInput.placeholder = "";
+    dom.timerInput.style.display = "none";
+    dom.timerDiv.style.display = "block";
+    dom.subtractBtn.style.opacity = "100";
+    dom.clearBtn.style.opacity = "100";
+    dom.addBtn.style.opacity = "100";
     timerKickoff(match[1], match[2]);
   }
-  global.timerInput.value = "";
+  dom.timerInput.value = "";
 };
 
 const removeTime = () => {
@@ -104,26 +105,26 @@ const removeTime = () => {
 
 const addTime = () => {
   global.duration += 60;
-  if (global.duration > 60) global.subtractBtn.style.opacity = 100;
+  if (global.duration > 60) dom.subtractBtn.style.opacity = 100;
   timer();
 };
 
 const stopTimer = () => {
   clearInterval(global.interval);
-  global.timerInput.style.display = "block";
-  global.timerDiv.style.display = "none";
-  global.subtractBtn.style.opacity = "0";
-  global.clearBtn.innerHTML = "clear";
-  global.clearBtn.style.opacity = "0";
-  global.addBtn.style.opacity = "0";
-  global.timerInput.focus();
+  dom.timerInput.style.display = "block";
+  dom.timerDiv.style.display = "none";
+  dom.subtractBtn.style.opacity = "0";
+  dom.clearBtn.innerHTML = "clear";
+  dom.clearBtn.style.opacity = "0";
+  dom.addBtn.style.opacity = "0";
+  dom.timerInput.focus();
 };
 
 const updateAudio = () => {
   if (storage.getItem("volume") === "on") {
-    global.audioImg.src = "images/audio.png";
+    dom.audioImg.src = "images/audio.png";
   } else {
-    global.audioImg.src = "images/no-audio.png";
+    dom.audioImg.src = "images/no-audio.png";
   }
 };
 
@@ -137,23 +138,23 @@ const toggleAudio = () => {
 };
 
 const addDomEles = () => {
-  global.body = document.querySelector("body");
-  global.form = document.querySelector("#timerForm");
-  global.timerInput = document.querySelector("#timerInput");
-  global.timerDiv = document.querySelector("#timerClock");
-  global.subtractBtn = document.querySelector("#subtract-time-btn");
-  global.clearBtn = document.querySelector("#stop-timer");
-  global.addBtn = document.querySelector("#add-time-btn");
-  global.audioBtn = document.querySelector("#audio-btn");
-  global.audioImg = document.querySelector("#audio-icon");
+  dom.body = document.querySelector("body");
+  dom.form = document.querySelector("#timerForm");
+  dom.timerInput = document.querySelector("#timerInput");
+  dom.timerDiv = document.querySelector("#timerClock");
+  dom.subtractBtn = document.querySelector("#subtract-time-btn");
+  dom.clearBtn = document.querySelector("#stop-timer");
+  dom.addBtn = document.querySelector("#add-time-btn");
+  dom.audioBtn = document.querySelector("#audio-btn");
+  dom.audioImg = document.querySelector("#audio-icon");
 };
 
 const addListeners = () => {
-  global.form.addEventListener("submit", startTimer);
-  global.subtractBtn.addEventListener("click", removeTime);
-  global.clearBtn.addEventListener("click", stopTimer);
-  global.addBtn.addEventListener("click", addTime);
-  global.audioBtn.addEventListener("click", toggleAudio);
+  dom.form.addEventListener("submit", startTimer);
+  dom.subtractBtn.addEventListener("click", removeTime);
+  dom.clearBtn.addEventListener("click", stopTimer);
+  dom.addBtn.addEventListener("click", addTime);
+  dom.audioBtn.addEventListener("click", toggleAudio);
 };
 
 const loadAudio = () => {
@@ -165,7 +166,7 @@ const init = () => {
   addListeners();
   loadAudio();
   checkStorage();
-  global.timerInput.focus();
+  dom.timerInput.focus();
 };
 
 window.addEventListener("load", init);
