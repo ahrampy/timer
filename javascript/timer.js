@@ -1,6 +1,7 @@
 const storage = window.localStorage;
 
 const domObj = {
+  html: null,
   body: null,
   form: null,
   timerInput: null,
@@ -12,7 +13,7 @@ const domObj = {
   audioIcon: null,
   bgBtn: null,
   bgIcon: null,
-  bgOptions: null,
+  bgMenu: null,
 };
 
 const timeObj = {
@@ -27,7 +28,6 @@ const timeObj = {
 };
 
 const themeObj = {
-  theme: "river",
   river: {
     img: 1,
     main: "#e8f8f8",
@@ -35,13 +35,13 @@ const themeObj = {
   },
   mountain: {
     img: 2,
-    main: "#fff",
-    accent: "#333",
+    main: "rgba(171,203,252,0.7)",
+    accent: "#462b64",
   },
   window: {
     img: 3,
-    main: "#333",
-    accent: "#fff",
+    main: "#6c5c64",
+    accent: "#f5e2be",
   },
 };
 
@@ -50,20 +50,54 @@ const assetsObj = {
 };
 
 const checkStorage = () => {
-  if (storage.getItem("volume") === undefined) {
+  if (!storage.getItem("volume")) {
     storage.setItem("volume", "on");
   }
-  if (storage.getItem("theme") === undefined) {
+  if (!storage.getItem("theme")) {
     storage.setItem("theme", "river");
   }
+  updateTheme();
   updateAudio();
+};
+
+const toggleBgMenu = () => {
+  if (domObj.bgMenu.classList.contains("hidden")) {
+    domObj.bgMenu.classList.remove("hidden");
+    domObj.bgIcon.src = "../images/arrow-right.png";
+  } else {
+    domObj.bgMenu.classList.add("hidden");
+    domObj.bgIcon.src = "../images/arrow-left.png";
+  }
+};
+
+const updateTheme = () => {
+  const currTheme = storage.getItem("theme");
+  const currThemeObj = themeObj[currTheme];
+  domObj.html.style.backgroundImage = `url("../images/bg-${currThemeObj.img}.png")`;
+  document.querySelector(`#${currTheme}`).classList.add("hidden");
+  document.documentElement.style.setProperty("--main", `${currThemeObj.main}`);
+  document.documentElement.style.setProperty(
+    "--accent",
+    `${currThemeObj.accent}`
+  );
+};
+
+const setBgOption = (e) => {
+  const newTheme = e.target.id;
+  const currTheme = storage.getItem("theme");
+  const oldBtn = document.querySelector(`#${currTheme}`);
+  const newBtn = document.querySelector(`#${newTheme}`);
+  oldBtn.classList.remove("hidden");
+  newBtn.classList.add("hidden");
+  storage.setItem("theme", newTheme);
+  updateTheme();
 };
 
 const updateAudio = () => {
   if (storage.getItem("volume") === "on") {
-    domObj.audioImg.src = "images/volume-on.png";
-  } else {
     domObj.audioImg.src = "images/volume-off.png";
+  } else {
+    domObj.audioImg.src = "images/volume-on.png";
   }
 };
 
@@ -74,16 +108,6 @@ const toggleAudio = () => {
     storage.setItem("volume", "on");
   }
   updateAudio();
-};
-
-const toggleBgOptions = () => {
-  if (domObj.bgOptions.classList.contains("hidden")) {
-    domObj.bgOptions.classList.remove("hidden");
-    domObj.bgIcon.src = "../images/arrow-right.png";
-  } else {
-    domObj.bgOptions.classList.add("hidden");
-    domObj.bgIcon.src = "../images/arrow-left.png";
-  }
 };
 
 const timerKickoff = (mins = 0, secs = 0) => {
@@ -174,6 +198,7 @@ const stopTimer = () => {
 };
 
 const addDomEles = () => {
+  domObj.html = document.querySelector("html");
   domObj.body = document.querySelector("body");
   domObj.form = document.querySelector("#timerForm");
   domObj.timerInput = document.querySelector("#timerInput");
@@ -185,7 +210,8 @@ const addDomEles = () => {
   domObj.audioImg = document.querySelector("#audio-icon");
   domObj.bgBtn = document.querySelector("#bg-btn");
   domObj.bgIcon = document.querySelector("#bg-icon");
-  domObj.bgOptions = document.querySelector(".bg-options");
+  domObj.bgMenu = document.querySelector(".bg-menu");
+  domObj.bgOptions = document.querySelectorAll(".bg-option");
 };
 
 const addListeners = () => {
@@ -194,7 +220,10 @@ const addListeners = () => {
   domObj.clearBtn.addEventListener("click", stopTimer);
   domObj.addBtn.addEventListener("click", addTime);
   domObj.audioBtn.addEventListener("click", toggleAudio);
-  domObj.bgBtn.addEventListener("click", toggleBgOptions);
+  domObj.bgBtn.addEventListener("click", toggleBgMenu);
+  domObj.bgOptions.forEach((option) => {
+    option.addEventListener("click", setBgOption);
+  });
 };
 
 const loadAudio = () => {
