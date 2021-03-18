@@ -37,7 +37,7 @@ const themeObj = {
   mountain: {
     img: 2,
     main: "#fff3b5",
-    accent: "#370bc4",
+    accent: "#83579b",
   },
   window: {
     img: 3,
