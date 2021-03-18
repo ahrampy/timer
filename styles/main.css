@@ -1,6 +1,6 @@
 :root {
-  --main: #e8f8f8;
-  --accent: #1b3532;
+  /* --main: #e8f8f8;
+  --accent: #1b3532; */
 }
 
 html {
@@ -10,7 +10,7 @@ html {
   width: 100%;
   height: 100%;
   background: center;
-  background-image: url(../images/bg-1.png);
+  /* background-image: url(../images/bg-1.png); */
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

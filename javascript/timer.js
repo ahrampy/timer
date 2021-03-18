@@ -194,9 +194,9 @@ const stopTimer = () => {
   clearInterval(timeObj.interval);
   domObj.timerInput.style.display = "block";
   domObj.timerDiv.style.display = "none";
-  domObj.subtractBtn.style.opacity = "0";
   domObj.clearSymbol.classList.remove("stop-timer-symbol");
   domObj.clearSymbol.classList.add("play-timer-symbol");
+  domObj.subtractBtn.style.opacity = "0";
   domObj.clearBtn.style.opacity = "0";
   domObj.addBtn.style.opacity = "0";
   domObj.timerInput.focus();
