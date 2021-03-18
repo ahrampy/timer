@@ -8,6 +8,7 @@ const domObj = {
   timerDiv: null,
   subtractBtn: null,
   clearBtn: null,
+  clearSymbol: null,
   addBtn: null,
   audioBtn: null,
   audioIcon: null,
@@ -136,7 +137,8 @@ function timer() {
     if (storage.getItem("volume") === "on") assetsObj.ding.play();
     domObj.subtractBtn.style.opacity = "0";
     domObj.addBtn.style.opacity = "0";
-    domObj.clearBtn.innerHTML = "new";
+    domObj.clearSymbol.classList.remove("stop-timer-symbol");
+    domObj.clearSymbol.classList.add("play-timer-symbol");
     clearInterval(timeObj.interval);
   } else if (timeObj.diff < 0) return;
 
@@ -165,6 +167,8 @@ const startTimer = (e) => {
     domObj.timerInput.placeholder = "";
     domObj.timerInput.style.display = "none";
     domObj.timerDiv.style.display = "block";
+    domObj.clearSymbol.classList.remove("play-timer-symbol");
+    domObj.clearSymbol.classList.add("stop-timer-symbol");
     domObj.subtractBtn.style.opacity = "100";
     domObj.clearBtn.style.opacity = "100";
     domObj.addBtn.style.opacity = "100";
@@ -191,7 +195,8 @@ const stopTimer = () => {
   domObj.timerInput.style.display = "block";
   domObj.timerDiv.style.display = "none";
   domObj.subtractBtn.style.opacity = "0";
-  domObj.clearBtn.innerHTML = "clear";
+  domObj.clearSymbol.classList.remove("stop-timer-symbol");
+  domObj.clearSymbol.classList.add("play-timer-symbol");
   domObj.clearBtn.style.opacity = "0";
   domObj.addBtn.style.opacity = "0";
   domObj.timerInput.focus();
@@ -204,7 +209,8 @@ const addDomEles = () => {
   domObj.timerInput = document.querySelector("#timerInput");
   domObj.timerDiv = document.querySelector("#timerClock");
   domObj.subtractBtn = document.querySelector("#subtract-time-btn");
-  domObj.clearBtn = document.querySelector("#stop-timer");
+  domObj.clearBtn = document.querySelector("#clear-timer-btn");
+  domObj.clearSymbol = document.querySelector("#clear-timer-symbol");
   domObj.addBtn = document.querySelector("#add-time-btn");
   domObj.audioBtn = document.querySelector("#audio-btn");
   domObj.audioImg = document.querySelector("#audio-icon");
