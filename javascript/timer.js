@@ -32,12 +32,12 @@ const themeObj = {
   river: {
     img: 1,
     main: "#e8f8f8",
-    accent: "#1b3532",
+    accent: "#406060",
   },
   mountain: {
     img: 2,
-    main: "rgba(171,203,252,0.7)",
-    accent: "#462b64",
+    main: "#fff3b5",
+    accent: "#370bc4",
   },
   window: {
     img: 3,

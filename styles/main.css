@@ -116,7 +116,7 @@ h2 {
   margin-bottom: 10vh;
   padding: 1em;
   border: var(--accent) solid 1px;
-  border-radius: 5px;
+  border-radius: 2px;
   box-sizing: border-box;
   -webkit-transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;
@@ -161,12 +161,12 @@ h2 {
 }
 
 .stop-timer-symbol {
-  border: solid 13px var(--accent);
+  border: solid 11px var(--accent);
 }
 
 .play-timer-symbol {
   border-style: solid;
-  border-width: 15px 0px 15px 25px;
+  border-width: 11px 0px 11px 20px;
   border-color: transparent transparent transparent var(--accent);
 }
 
@@ -183,7 +183,7 @@ h2 {
   justify-content: center;
   align-items: center;
   border: var(--accent) solid 1px;
-  border-radius: 5px;
+  border-radius: 2px;
   -webkit-transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;
   -ms-transition: all 0.3s ease-in-out;
