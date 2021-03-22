@@ -222,6 +222,7 @@ const addDomEles = () => {
 
 const addListeners = () => {
   domObj.form.addEventListener("submit", startTimer);
+  domObj.timerDiv.addEventListener("dblclick", stopTimer);
   domObj.subtractBtn.addEventListener("click", removeTime);
   domObj.clearBtn.addEventListener("click", stopTimer);
   domObj.addBtn.addEventListener("click", addTime);
