@@ -1,47 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="images/timer.ico" type="image/ico"/>
-  <link rel="stylesheet" href="styles/reset.css"></link>
-  <link rel="stylesheet" href="styles/main.css"></link>
+  <link rel="icon" href="images/timer.ico" type="image/ico" />
+  <link rel="stylesheet" href="styles/reset.css">
+  </link>
+  <link rel="stylesheet" href="styles/main.css">
+  </link>
   <script src="javascript/timer.js"></script>
   <title>Timer</title>
 </head>
+
 <body>
-    <button id="audio-btn">
-      <img id="audio-icon" src="images/volume-on.png"></img>
-    </button>
+  <button id="audio-btn">
+    <img id="audio-icon" src="images/volume-on.png"></img>
+  </button>
   <div id="timer-container">
-    <h2 contenteditable="true">Let's come back in:    </h2>
+    <h2 contenteditable="true">Let's come back in: </h2>
     <form action="" id="timerForm" autocomplete="off">
       <input type="text" name="input" id="timerInput">
     </form>
-      <div id="timerClock" style="display: none;"></div>
-      <div id="timer-btns">
-        <button id="subtract-time-btn" style="opacity: 0;">
-          <div class="timer-btns-symbol">&minus;</div>
-        </button>
-        <button id="clear-timer-btn" style="opacity: 0;">
-          <div id="clear-timer-symbol" class="stop-timer-symbol timer-btns-symbol"></div>
-        </button>
-        <button id="add-time-btn" style="opacity: 0;">
-          <div class="timer-btns-symbol">&plus;</div>
-        </button>
-      </div>
+    <div id="timerClock" style="display: none;"></div>
+    <div id="timer-btns">
+      <button id="subtract-time-btn" style="opacity: 0;">
+        <div class="timer-btns-symbol">&minus;</div>
+      </button>
+      <button id="clear-timer-btn" style="opacity: 0;">
+        <div id="clear-timer-symbol" class="stop-timer-symbol timer-btns-symbol"></div>
+      </button>
+      <button id="add-time-btn" style="opacity: 0;">
+        <div class="timer-btns-symbol">&plus;</div>
+      </button>
+    </div>
+  </div>
+  <div id="error-spacer" style="opacity: 0;">
+    <p id="error-message">only integers and up to one decimal plz</p>
   </div>
   <div id="plans">
     <h2 contenteditable="true">What we're doing:</h2>
     <textarea></textarea>
   </div>
-  <div class="bg-menu hidden" > 
+  <div class="bg-menu hidden">
     <button id="river" class="bg-option"></button>
     <button id="mountain" class="bg-option"></button>
     <button id="window" class="bg-option"></button>
   </div>
   <button id="bg-btn">
-    <img id="bg-icon" src="./images/arrow-left.png"/>
+    <img id="bg-icon" src="./images/arrow-left.png" />
   </button>
 </body>
+
 </html>

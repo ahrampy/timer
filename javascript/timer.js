@@ -15,12 +15,15 @@ const domObj = {
   bgBtn: null,
   bgIcon: null,
   bgMenu: null,
+  errorSpacer: null,
 };
 
 const timeObj = {
   // hours, minutes, seconds
   time: [0, 0, 0],
 
+  timeOn: false,
+  inputCheck: null,
   display: null,
   duration: null,
   start: null,
@@ -111,6 +114,26 @@ const toggleAudio = () => {
   updateAudio();
 };
 
+const checkInput = (e) => {
+  clearTimeout(timeObj.inputCheck);
+  domObj.errorSpacer.style.opacity = "0";
+  domObj.clearBtn.style.opacity = "0";
+  domObj.clearSymbol.classList.remove("play-timer-symbol");
+  timeObj.inputCheck = setTimeout(() => {
+    let regex = /^(-?\d+)*\.?([1-9])?$/;
+    let match = e.target.value.match(regex);
+    if (!timeObj.timeOn) {
+      if (match && match.input !== "") {
+        domObj.clearSymbol.classList.add("play-timer-symbol");
+        domObj.clearBtn.style.opacity = "100";
+      } else {
+        domObj.errorSpacer.style.opacity = "100";
+        // console.log(match);
+      }
+    }
+  }, 500);
+};
+
 const timerKickoff = (mins = 0, secs = 0) => {
   timeObj.duration = mins * 60 + secs * 6;
   timeObj.start = Date.now();
@@ -157,13 +180,14 @@ const changeDisplay = () => {
 };
 
 const startTimer = (e) => {
-  e.preventDefault();
+  if (e) e.preventDefault();
 
   // select for any int or a float with one decimal
   let regex = /^(-?\d+)*\.?([1-9])?$/;
 
   let match = domObj.timerInput.value.match(regex);
   if (match) {
+    timeObj.timeOn = true;
     domObj.timerInput.placeholder = "";
     domObj.timerInput.style.display = "none";
     domObj.timerDiv.style.display = "block";
@@ -190,8 +214,11 @@ const addTime = () => {
   timer();
 };
 
+const toggleTime = () => (timeObj.timeOn ? stopTimer() : startTimer());
+
 const stopTimer = () => {
   clearInterval(timeObj.interval);
+  timeObj.timeOn = false;
   domObj.timerInput.style.display = "block";
   domObj.timerDiv.style.display = "none";
   domObj.clearSymbol.classList.remove("stop-timer-symbol");
@@ -211,6 +238,7 @@ const addDomEles = () => {
   domObj.subtractBtn = document.querySelector("#subtract-time-btn");
   domObj.clearBtn = document.querySelector("#clear-timer-btn");
   domObj.clearSymbol = document.querySelector("#clear-timer-symbol");
+  domObj.errorSpacer = document.querySelector("#error-spacer");
   domObj.addBtn = document.querySelector("#add-time-btn");
   domObj.audioBtn = document.querySelector("#audio-btn");
   domObj.audioImg = document.querySelector("#audio-icon");
@@ -221,10 +249,11 @@ const addDomEles = () => {
 };
 
 const addListeners = () => {
+  domObj.timerInput.addEventListener("input", checkInput);
   domObj.form.addEventListener("submit", startTimer);
   domObj.timerDiv.addEventListener("dblclick", stopTimer);
   domObj.subtractBtn.addEventListener("click", removeTime);
-  domObj.clearBtn.addEventListener("click", stopTimer);
+  domObj.clearBtn.addEventListener("click", toggleTime);
   domObj.addBtn.addEventListener("click", addTime);
   domObj.audioBtn.addEventListener("click", toggleAudio);
   domObj.bgBtn.addEventListener("click", toggleBgMenu);
