@@ -128,7 +128,6 @@ const checkInput = (e) => {
         domObj.clearBtn.style.opacity = "100";
       } else {
         domObj.errorSpacer.style.opacity = "100";
-        // console.log(match);
       }
     }
   }, 500);
@@ -202,6 +201,7 @@ const startTimer = (e) => {
 };
 
 const removeTime = () => {
+  if (!timeObj.timeOn) return;
   if (timeObj.duration > 60) {
     timeObj.duration -= 60;
     timer();
@@ -209,12 +209,16 @@ const removeTime = () => {
 };
 
 const addTime = () => {
+  if (!timeObj.timeOn) return;
   timeObj.duration += 60;
   if (timeObj.duration > 60) domObj.subtractBtn.style.opacity = 100;
   timer();
 };
 
-const toggleTime = () => (timeObj.timeOn ? stopTimer() : startTimer());
+const toggleTime = () => {
+  if (!timeObj.timeOn && domObj.clearBtn.style.opacity === "0") return;
+  timeObj.timeOn ? stopTimer() : startTimer();
+};
 
 const stopTimer = () => {
   clearInterval(timeObj.interval);
