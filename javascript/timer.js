@@ -15,6 +15,7 @@ const domObj = {
   bgBtn: null,
   bgIcon: null,
   bgMenu: null,
+  gitBtn: null,
   errorSpacer: null,
 };
 
@@ -68,9 +69,11 @@ const checkStorage = () => {
 const toggleBgMenu = () => {
   if (domObj.bgMenu.classList.contains("hidden")) {
     domObj.bgMenu.classList.remove("hidden");
+    domObj.gitBtn.classList.remove("hidden");
     domObj.bgIcon.src = "../images/arrow-right.png";
   } else {
     domObj.bgMenu.classList.add("hidden");
+    domObj.gitBtn.classList.add("hidden");
     domObj.bgIcon.src = "../images/arrow-left.png";
   }
 };
@@ -259,6 +262,7 @@ const addDomEles = () => {
   domObj.bgIcon = document.querySelector("#bg-icon");
   domObj.bgMenu = document.querySelector(".bg-menu");
   domObj.bgOptions = document.querySelectorAll(".bg-option");
+  domObj.gitBtn = document.querySelector("#git-btn");
 };
 
 const addListeners = () => {

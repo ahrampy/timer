@@ -42,8 +42,14 @@ h2 {
   height: 2em;
 }
 
+#git-btn {
+  bottom: 4em;
+  width: 2em;
+}
+
 #audio-btn,
-#bg-btn {
+#bg-btn,
+#git-btn {
   position: absolute;
   right: 1em;
   padding: 1px;
@@ -53,7 +59,8 @@ h2 {
 }
 
 #audio-btn:focus,
-#bg-btn:focus {
+#bg-btn:focus,
+#git-btn:focus {
   outline: 0;
 }
 
@@ -63,7 +70,13 @@ h2 {
   height: 25px;
 }
 
-#bg-icon {
+#git-icon {
+  width: 20px;
+  height: 20px;
+}
+
+#bg-icon,
+#git-icon {
   filter: invert(100);
 }
 
