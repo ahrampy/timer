@@ -238,6 +238,10 @@ const stopTimer = () => {
   domObj.timerInput.focus();
 };
 
+const checkDone = () => {
+  if (timeObj.diff === 0) stopTimer();
+};
+
 const addDomEles = () => {
   domObj.html = document.querySelector("html");
   domObj.body = document.querySelector("body");
@@ -261,6 +265,7 @@ const addListeners = () => {
   domObj.timerInput.addEventListener("input", checkInput);
   domObj.form.addEventListener("submit", startTimer);
   domObj.timerDiv.addEventListener("dblclick", stopTimer);
+  domObj.timerDiv.addEventListener("click", checkDone);
   domObj.subtractBtn.addEventListener("click", removeTime);
   domObj.clearBtn.addEventListener("click", toggleTime);
   domObj.addBtn.addEventListener("click", addTime);
