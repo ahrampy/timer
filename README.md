@@ -9,7 +9,7 @@
 
 - start the timer with either the play button or 'enter'
 
-- stop the timer with either the stop button or double-clicking
+- stop the timer with either the stop button, double-clicking, or single-clicking if the timer is done
 
 - add or subtract a minute from the current time with the plus or minus symbol
 
