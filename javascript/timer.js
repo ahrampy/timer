@@ -23,6 +23,7 @@ const timeObj = {
   time: [0, 0, 0],
 
   timeOn: false,
+  errorDisplay: null,
   inputCheck: null,
   display: null,
   duration: null,
@@ -116,6 +117,7 @@ const toggleAudio = () => {
 
 const checkInput = (e) => {
   clearTimeout(timeObj.inputCheck);
+  clearTimeout(timeObj.errorDisplay);
   domObj.errorSpacer.style.opacity = "0";
   domObj.clearBtn.style.opacity = "0";
   domObj.clearSymbol.classList.remove("play-timer-symbol");
@@ -127,6 +129,9 @@ const checkInput = (e) => {
         domObj.clearSymbol.classList.add("play-timer-symbol");
         domObj.clearBtn.style.opacity = "100";
       } else {
+        timeObj.errorDisplay = setTimeout(() => {
+          domObj.errorSpacer.style.opacity = "0";
+        }, 3500);
         domObj.errorSpacer.style.opacity = "100";
       }
     }
