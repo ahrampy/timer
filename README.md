@@ -5,7 +5,7 @@
 
 ## use
 
-- integers and up to one decimal entered into the timer input will be converted to minutes and start counting down
+- integers and up to one decimal entered into the timer input will be converted to hours/minutes/seconds and start counting
 
 - start the timer with either the play button or 'enter'
 
