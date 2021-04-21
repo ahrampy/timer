@@ -150,6 +150,15 @@ const timerKickoff = (mins = 0, secs = 0) => {
   timeObj.interval = setInterval(timer, 1000);
 };
 
+const end = () => {
+  if (storage.getItem("volume") === "on") assetsObj.ding.play();
+  domObj.subtractBtn.style.opacity = "0";
+  domObj.addBtn.style.opacity = "0";
+  domObj.clearSymbol.classList.remove("stop-timer-symbol");
+  domObj.clearSymbol.classList.add("play-timer-symbol");
+  clearInterval(timeObj.interval);
+};
+
 function timer() {
   timeObj.diff = timeObj.duration - (((Date.now() - timeObj.start) / 1000) | 0);
 
@@ -176,15 +185,6 @@ function timer() {
   }
 
   changeDisplay();
-}
-
-function end() {
-  if (storage.getItem("volume") === "on") assetsObj.ding.play();
-  domObj.subtractBtn.style.opacity = "0";
-  domObj.addBtn.style.opacity = "0";
-  domObj.clearSymbol.classList.remove("stop-timer-symbol");
-  domObj.clearSymbol.classList.add("play-timer-symbol");
-  clearInterval(timeObj.interval);
 }
 
 const changeDisplay = () => {
