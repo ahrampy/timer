@@ -31,6 +31,7 @@ const timeObj = {
   start: null,
   diff: null,
   interval: null,
+  one: false,
 };
 
 const themeObj = {
@@ -144,6 +145,7 @@ const checkInput = (e) => {
 const timerKickoff = (mins = 0, secs = 0) => {
   timeObj.duration = mins * 60 + secs * 6;
   timeObj.start = Date.now();
+  timeObj.one = false;
   timer();
   timeObj.interval = setInterval(timer, 1000);
 };
@@ -163,16 +165,26 @@ function timer() {
     timeObj.time[2] < 10 ? "0" + timeObj.time[2] : timeObj.time[2];
 
   if (timeObj.diff <= 60) domObj.subtractBtn.style.opacity = 0;
-  if (timeObj.diff === 0) {
-    if (storage.getItem("volume") === "on") assetsObj.ding.play();
-    domObj.subtractBtn.style.opacity = "0";
-    domObj.addBtn.style.opacity = "0";
-    domObj.clearSymbol.classList.remove("stop-timer-symbol");
-    domObj.clearSymbol.classList.add("play-timer-symbol");
-    clearInterval(timeObj.interval);
-  } else if (timeObj.diff < 0) return;
+  if (timeObj.diff === 0 || timeObj.one) {
+    end();
+  } else if (timeObj.diff === 1) {
+    // stops bug if interval gets slightly off right at the end and diff never hits 0
+    timeObj.one = true;
+  } else if (timeObj.diff < 0) {
+    // stops visual bug for opposite case, where diff goes one too far
+    return;
+  }
 
   changeDisplay();
+}
+
+function end() {
+  if (storage.getItem("volume") === "on") assetsObj.ding.play();
+  domObj.subtractBtn.style.opacity = "0";
+  domObj.addBtn.style.opacity = "0";
+  domObj.clearSymbol.classList.remove("stop-timer-symbol");
+  domObj.clearSymbol.classList.add("play-timer-symbol");
+  clearInterval(timeObj.interval);
 }
 
 const changeDisplay = () => {
